@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+
+  localstack:
+    image: localstack/localstack:0.12.11
+    ports:
+      - 4566:4566
+    environment:
+      - SERVICES=s3,sqs,sns
+      - DEFAULT_REGION=sa-east-1
+      - AWS_ACCESS_KEY_ID=hugoltsp
+      - AWS_SECRET_ACCESS_KEY=hugoltsp
+      - DATA_DIR=/tmp/localstack/data
+      - PERSISTENCE_SINGLE_FILE=false
+    volumes:
+      - ./setup/init.sh:/docker-entrypoint-initaws.d/setup.sh
+      - ./data:/tmp/localstack/data
+    networks:
+      - local
+      
+networks:
+    local:
